@@ -126,21 +126,26 @@ public class Practice {
     public static Region getRegionOfITDepartment() throws Exception {
         //TODO Implement the method
         return getAllDepartments().stream()
-                .filter(department -> department.getDepartmentName().startsWith("IT"))
-                .findFirst().get().getLocation().getCountry().getRegion();
+                .filter(department -> department.getDepartmentName().equals("IT"))
+                .findFirst().orElseThrow(() -> new Exception("No department found"))
+                .getLocation().getCountry().getRegion();
 
     }
 
     // Display all the departments where the region of department is 'Europe'
     public static List<Department> getAllDepartmentsWhereRegionOfCountryIsEurope() {
         //TODO Implement the method
-        return new ArrayList<>();
+        return getAllDepartments().stream()
+                .filter(department -> department.getLocation().getCountry().getRegion().equals("Europe"))
+                .collect(Collectors.toList());
     }
 
     // Display if there is any employee with salary less than 1000. If there is none, the method should return true
     public static boolean checkIfThereIsNoSalaryLessThan1000() {
         //TODO Implement the method
-        return false;
+        return !getAllEmployees().stream()
+                .anyMatch(employee -> employee.getSalary()<1000);
+
     }
 
     // Check if the salaries of all the employees in IT department are greater than 2000 (departmentName: IT)
