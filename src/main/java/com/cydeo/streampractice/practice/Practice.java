@@ -192,7 +192,9 @@ public class Practice {
     // Display the employee(s) who gets the maximum salary
     public static List<Employee> getMaxSalaryEmployee() {
         //TODO Implement the method
-        return new ArrayList<>();
+        return getAllEmployees().stream()
+                .max(Comparator.comparing(Employee::getSalary))
+                .stream().collect(Collectors.toList());
     }
 
     // Display the max salary employee's job
