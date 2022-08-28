@@ -200,19 +200,29 @@ public class Practice {
     // Display the max salary employee's job
     public static Job getMaxSalaryEmployeeJob() throws Exception {
         //TODO Implement the method
-        return new Job();
+        return getMaxSalaryEmployee().get(0).getJob();
     }
 
     // Display the max salary in Americas Region
     public static Long getMaxSalaryInAmericasRegion() throws Exception {
         //TODO Implement the method
-        return 1L;
+        return getAllEmployees().stream()
+                .filter(employee -> employee.getDepartment()
+                        .getLocation().getCountry().getRegion()
+                        .getRegionName().equals("Americas"))
+                .max(Comparator.comparing(Employee::getSalary))
+                .get().getSalary();
     }
 
     // Display the second maximum salary an employee gets
     public static Long getSecondMaxSalary() throws Exception {
         //TODO Implement the method
-        return 1L;
+        return getAllEmployees().stream()
+                .sorted(Comparator.comparing(Employee::getSalary).reversed())
+                .map(employee -> employee.getSalary())
+                .distinct()
+                .skip(1)
+                .findFirst().get();
     }
 
     // Display the employee(s) who gets the second maximum salary
