@@ -228,13 +228,23 @@ public class Practice {
     // Display the employee(s) who gets the second maximum salary
     public static List<Employee> getSecondMaxSalaryEmployee() {
         //TODO Implement the method
-        return new ArrayList<>();
+        return getAllEmployees().stream()
+                .filter(employee -> {
+                    try {
+                        return employee.getSalary().equals(getSecondMaxSalary());
+                    } catch (Exception e){
+                        throw new RuntimeException(e);
+                    }
+                })
+                .collect(Collectors.toList());
     }
 
     // Display the minimum salary an employee gets
     public static Long getMinSalary() throws Exception {
         //TODO Implement the method
-        return 1L;
+        return getAllEmployees().stream()
+                .sorted(Comparator.comparing(Employee::getSalary))
+                .findFirst().get().getSalary();
     }
 
     // Display the employee(s) who gets the minimum salary
